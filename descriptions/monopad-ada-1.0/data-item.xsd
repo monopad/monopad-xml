@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="dataItem">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="provenance" minOccurs="0" maxOccurs="unbounded" type="uuid"/>
+      <xs:element name="label" minOccurs="0" maxOccurs="unbounded" type="label"/>
+      <xs:element name="content" minOccurs="0" type="xs:base64Binary"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+<xs:simpleType name="uuid">
+  <xs:restriction base="xs:string">
+    <xs:pattern value="[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}"/>
+  </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="property">
+  <xs:restriction base="xs:string">
+    <xs:pattern value="[a-zA-Z_][\w\.\-]*"/>
+  </xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="description">
+  <xs:sequence>
+    <xs:element name="text" type="xs:string"/>
+    <xs:element name="mime" minOccurs="0" type="xs:string"/>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="label">
+  <xs:sequence>
+    <xs:element name="name" type="property"/>
+    <xs:element name="description" minOccurs="0" type="description"/>
+    <xs:element name="value" minOccurs="0" type="primitive"/>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="primitive">
+  <xs:choice>
+    <xs:element name="nullValue" type="xs:string" fixed=""/>
+    <xs:element name="boolValue" type="xs:boolean"/>
+    <xs:element name="stringValue" type="xs:string"/>
+    <xs:element name="decimalValue" type="xs:decimal"/>
+    <xs:element name="arrayValue" type="array"/>
+    <xs:element name="objectValue" type="object"/>
+  </xs:choice>
+</xs:complexType>
+
+<xs:complexType name="array">
+  <xs:sequence>
+    <xs:element name="item" type="primitive" maxOccurs="unbounded"/>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="object">
+  <xs:sequence>
+    <xs:element name="entry" maxOccurs="unbounded">
+      <xs:complexType>
+        <xs:sequence>
+          <xs:element name="key" type="xs:string"/>
+          <xs:element name="value" type="primitive"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+
+</xs:schema> 
