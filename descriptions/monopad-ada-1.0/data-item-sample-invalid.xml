@@ -1,0 +1,18 @@
+<dataItem>
+  <provenance>e593f929-2baf-4ccf-b4f3-897914f1848c</provenance>
+  <provenance>af5e0725-ef42-43b6-99fc-c700e620edcb</provenance>
+  <label>
+    <name>foo-bar</name>
+    <description>
+      <info>This is an example</info>
+      <mime>text/plain</mime>
+    </description>
+    <value>
+      <stringValue>abc123</stringValue>
+    </value>
+  </label>
+  <label>
+    <name>ABC123</name>
+  </label>
+  <content>SGVsbG8gd29ybGQh</content>
+</dataItem>

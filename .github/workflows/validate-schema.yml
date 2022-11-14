@@ -1,0 +1,32 @@
+name: validate-schema
+
+on:
+  push:
+    branches: [ main ]
+    
+jobs:
+  Validate-XML-Schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3 # checkout repo content
+      - name: Install XML validator
+        run: apt install libxml2-utils
+      - name: Validate data-item.xsd through sample (1)
+        run: |
+         xmllint --schema $GITHUB_WORKSPACE/descriptions/monopad-ada-1.0/data-item.xsd \
+           $GITHUB_WORKSPACE/descriptions/monopad-ada-1.0/data-item-sample-1.xml
+      - name: Validate data-item.xsd through sample (2)
+        run: |
+         xmllint --schema $GITHUB_WORKSPACE/descriptions/monopad-ada-1.0/data-item.xsd \
+           $GITHUB_WORKSPACE/descriptions/monopad-ada-1.0/data-item-sample-2.xml
+      - name: Validate data-item.xsd through sample (empty)
+        run: |
+         xmllint --schema $GITHUB_WORKSPACE/descriptions/monopad-ada-1.0/data-item.xsd \
+           $GITHUB_WORKSPACE/descriptions/monopad-ada-1.0/data-item-sample-empty.xml
+      - name: Validate data-item.xsd through sample (invalid)
+        continue-on-error: true
+        run: |
+         xmllint --schema $GITHUB_WORKSPACE/descriptions/monopad-ada-1.0/data-item.xsd \
+           $GITHUB_WORKSPACE/descriptions/monopad-ada-1.0/data-item-sample-invalid.xml
+         test $? -ne 0
+
